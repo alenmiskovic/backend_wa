@@ -1,25 +1,35 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/userModel');
-require('dotenv').config();
 
 const addUser = async () => {
+    const mongoURI = process.env.MONGO_URI;
+    if (!mongoURI) {
+        console.error('MONGO_URI not defined in .env file');
+        process.exit(1);
+    }
+
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
+        await mongoose.connect(mongoURI);
         console.log('Connected to MongoDB');
 
         const username = 'alen';
-        const password = 'miskovic';
+        const password = 'miskovic';  // Običan tekst lozinke
 
-        const user = new User({ username, password });
-
-        try {
-            await user.save();
-            console.log('User added successfully');
-        } catch (error) {
-            console.error('Error adding user:', error);
-        } finally {
-            mongoose.connection.close();
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            console.log('User already exists');
+            return;
         }
+
+        const user = new User({
+            username,
+            password  // Običan tekst, bit će hashiran prije spremanja
+        });
+
+        await user.save();
+        console.log('User added successfully');
+        mongoose.connection.close();
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
     }

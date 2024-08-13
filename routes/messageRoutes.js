@@ -1,10 +1,12 @@
 const express = require('express');
-const { getRandomMessage, saveFavoriteMessage } = require('../controllers/messageController');
-const { authMiddleware } = require('../middleware/authMiddleware');
+const { getMessages, saveMessage } = require('../controllers/messageController'); // Provjerite da li funkcije postoje
 
 const router = new express.Router();
 
-router.get('/random', authMiddleware, getRandomMessage);
-router.post('/favorites', authMiddleware, saveFavoriteMessage);
+// Provjerite postoji li funkcija `getMessages` u messageController.js
+router.get('/', getMessages);
+
+// Provjerite postoji li funkcija `saveMessage` u messageController.js
+router.post('/save', saveMessage);
 
 module.exports = router;

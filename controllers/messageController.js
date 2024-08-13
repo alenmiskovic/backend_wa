@@ -39,3 +39,10 @@ exports.saveFavoriteMessage = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+exports.getMessages = (req, res) => {
+    res.status(200).json({ message: 'Dummy message retrieved' });
+};
+
+exports.saveMessage = (req, res) => {
+    res.status(200).json({ message: 'Dummy message saved' });
+};
