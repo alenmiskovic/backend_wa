@@ -1,8 +1,11 @@
 const express = require('express');
-const { login } = require('../controllers/userController');
+const router = express.Router();
+const userController = require('../controllers/userController'); // Provjerite da je put ispravan
 
-const router = new express.Router();
+// Ruta za prijavu
+router.post('/login', userController.login);
 
-router.post('/login', login);
+
+
 
 module.exports = router;

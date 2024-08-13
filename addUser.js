@@ -14,17 +14,11 @@ const addUser = async () => {
         console.log('Connected to MongoDB');
 
         const username = 'alen';
-        const password = 'miskovic';  // Običan tekst lozinke
-
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            console.log('User already exists');
-            return;
-        }
+        const password = 'miskovic';  // Lozinka ostaje u običnom tekstu
 
         const user = new User({
             username,
-            password  // Običan tekst, bit će hashiran prije spremanja
+            password
         });
 
         await user.save();
