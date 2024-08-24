@@ -1,7 +1,13 @@
+// models/messageModel.js
 const mongoose = require('mongoose');
 
-const MessageSchema = new mongoose.Schema({
-    content: { type: String, required: true }
+const messageSchema = new mongoose.Schema({
+  text: {
+    type: String,
+    required: true,
+  }
 });
 
-module.exports = mongoose.model('Message', MessageSchema);
+const Message = mongoose.model('Message', messageSchema);
+
+module.exports = Message;

@@ -1,14 +1,6 @@
 const Message = require('../models/messageModel');
 const User = require('../models/userModel');
 
-const motivationalMessages = [
-    "Keep pushing forward!",
-    "Believe in yourself!",
-    "You can do it!",
-    "Stay positive!",
-    "Never give up!"
-];
-
 exports.getRandomMessage = async (req, res) => {
     const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
     const messageContent = motivationalMessages[randomIndex];
@@ -23,22 +15,33 @@ exports.getRandomMessage = async (req, res) => {
 };
 
 exports.saveFavoriteMessage = async (req, res) => {
-    const { userId, message } = req.body;
+    const { message } = req.body;
+    const userId = req.user.id;  // Pretpostavljam da je `user` objekat dostupan nakon autentifikacije
+
     try {
         const user = await User.findById(userId);
-        const messageDoc = await Message.findOne({ content: message });
-        
+        if (!user) {
+            return res.status(404).json({ success: false, error: "User not found" });
+        }
+
+        const messageDoc = await Message.findOne({ text: message });
         if (!messageDoc) {
             return res.status(404).json({ success: false, error: "Message not found" });
         }
 
-        user.favorites.push(messageDoc._id);
-        await user.save();
-        res.json({ success: true });
+        if (!user.favorites.includes(messageDoc._id)) {
+            user.favorites.push(messageDoc._id);
+            await user.save();
+        }
+
+        res.json({ success: true, message: "Message saved to favorites" });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+
+
+
 exports.getMessages = (req, res) => {
     res.status(200).json({ message: 'Dummy message retrieved' });
 };
