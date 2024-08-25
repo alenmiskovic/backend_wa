@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   getRandomMessage,
   saveFavoriteMessage,
-  getFavoriteMessages // Ovdje se ispravno uvozi funkcija
+  getFavoriteMessages,
+  deleteFavoriteMessage
 } = require('../controllers/messageController');
 const authenticateToken = require('../middleware/authenticateToken');
 
@@ -15,5 +16,8 @@ router.post('/favorites', authenticateToken, saveFavoriteMessage);
 
 // Ruta za dohvaćanje omiljenih poruka
 router.get('/favorites', authenticateToken, getFavoriteMessages);
+
+// Ruta za brisanje poruke iz favorita
+router.delete('/favorites', authenticateToken, deleteFavoriteMessage);
 
 module.exports = router;
