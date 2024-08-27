@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];  // Izvlačimo token iz "Bearer <token>"
+  const token = authHeader && authHeader.split(' ')[1];  
 
   console.log('Token received:', token);
 
@@ -18,8 +18,8 @@ const authenticateToken = (req, res, next) => {
     }
 
     console.log('Token is valid, user:', user);
-    req.user = user;  // Postavljamo user objekat u req.user
-    next();  // Nastavljamo na sljedeću funkciju
+    req.user = user;  
+    next();  
   });
 };
 

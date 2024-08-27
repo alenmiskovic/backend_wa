@@ -15,13 +15,13 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: 'Invalid login credentials' });
         }
 
-        // Koristimo JWT_SECRET iz .env datoteke
+        
         const secretKey = process.env.JWT_SECRET;
         if (!secretKey) {
             throw new Error('JWT_SECRET is not defined');
         }
 
-        // Generiranje JWT tokena
+       
         const token = jwt.sign({ _id: user._id }, secretKey);
         res.json({ token });
     } catch (error) {

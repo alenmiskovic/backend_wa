@@ -14,7 +14,7 @@ const addUser = async () => {
         console.log('Connected to MongoDB');
 
         const username = 'alen';
-        const password = 'miskovic';  // Lozinka ostaje u običnom tekstu
+        const password = 'miskovic';  
 
         const user = new User({
             username,

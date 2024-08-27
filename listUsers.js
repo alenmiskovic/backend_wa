@@ -1,6 +1,6 @@
-require('dotenv').config(); // Učitaj varijable iz .env datoteke
+require('dotenv').config(); 
 const mongoose = require('mongoose');
-const User = require('./models/userModel'); // Pretpostavljam da imate userModel.js
+const User = require('./models/userModel'); 
 
 const listUsers = async () => {
     const mongoURI = process.env.MONGO_URI;
@@ -10,15 +10,12 @@ const listUsers = async () => {
     }
 
     try {
-        // Povezivanje s MongoDB
         await mongoose.connect(mongoURI);
         console.log('Connected to MongoDB');
 
-        // Dohvati sve korisnike iz kolekcije `users`
         const users = await User.find({});
         console.log('All Users:', users);
 
-        // Zatvori konekciju s bazom podataka
         mongoose.connection.close();
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -26,5 +23,4 @@ const listUsers = async () => {
     }
 };
 
-// Pozovi funkciju za ispis korisnika
 listUsers();
